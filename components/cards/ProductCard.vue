@@ -1,8 +1,8 @@
 <template>
   <div class="product-card filled-div">
     <div class="product-card__info">
-      <div v-if="product.imgUrl" class="product-card__image">
-        <img :src="product.imgUrl" :alt="product.title" />
+      <div v-if="product.thumbnail" class="product-card__image">
+        <img :src="product.thumbnail" :alt="product.title" />
       </div>
       <div class="product-card__title">
         <h3>{{ product.title }}</h3>

@@ -1,8 +1,8 @@
 <template>
   <div class="cart-product-card">
     <template v-if="product">
-      <div v-if="product.imgUrl" class="cart-product-card__image">
-        <img :src="product.imgUrl" :alt="product.title" />
+      <div v-if="product.thumbnail" class="cart-product-card__image">
+        <img :src="product.thumbnail" :alt="product.title" />
       </div>
       <div class="cart-product-card__info">
         <div class="cart-product-card__title">
@@ -73,9 +73,7 @@ const emits = defineEmits(["increment", "decrement", "delete"]);
 const store = useStore();
 
 const product = computed(() => {
-  const product = store.getters["products/getProductById"](
-    props.cartItem.productId
-  );
+  const product = store.getters["products/getProductById"](props.cartItem.id);
   return product ?? undefined;
 });
 </script>

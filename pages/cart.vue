@@ -20,12 +20,12 @@
         <div class="cart-content__list">
           <cart-product-card
             v-for="item in store.state.cart.items"
-            :key="`cart-item-${item.productId}`"
+            :key="`cart-item-${item.id}`"
             :cart-item="item"
             class="cart-content__list-item"
-            @increment="incCartItem(item.productId)"
-            @decrement="decCartItem(item.productId)"
-            @delete="deleteCartItem(item.productId)"
+            @increment="incCartItem(item.id)"
+            @decrement="decCartItem(item.id)"
+            @delete="deleteCartItem(item.id)"
           />
         </div>
         <div class="cart-content__installation filled-div">

@@ -1,21 +1,21 @@
 import { Module } from "vuex";
 import { Cart, CartItem } from "@/types/cart";
 import { RootState } from "@/store/index";
-import { createOrder } from "@/data/orderApi";
+import { createOrder } from "@/data/api/orderApi";
 
 const cartModule: Module<Cart, RootState> = {
   state: () => ({
     items: [
       {
-        productId: "G2H1065",
+        id: 1,
         quantity: 1,
       },
       {
-        productId: "BXC1065",
+        id: 2,
         quantity: 2,
       },
       {
-        productId: "GHN1065",
+        id: 3,
         quantity: 1,
       },
     ],
@@ -45,7 +45,7 @@ const cartModule: Module<Cart, RootState> = {
     },
     getTotalPrice(state: Cart, _, __, rootGetters) {
       return state.items.reduce((res: number, item: CartItem) => {
-        const product = rootGetters["products/getProductById"](item.productId);
+        const product = rootGetters["products/getProductById"](item.id);
         return res + item.quantity * product?.price;
       }, 0);
     },
@@ -60,16 +60,16 @@ const cartModule: Module<Cart, RootState> = {
     },
   },
   mutations: {
-    incItemQuantity(state: Cart, productId: string) {
-      const cartItem = state.items.find((item) => item.productId === productId);
+    incItemQuantity(state: Cart, productId: number) {
+      const cartItem = state.items.find((item) => item.id === productId);
       if (cartItem) cartItem.quantity++;
     },
-    decItemQuantity(state: Cart, productId: string) {
-      const cartItem = state.items.find((item) => item.productId === productId);
+    decItemQuantity(state: Cart, productId: number) {
+      const cartItem = state.items.find((item) => item.id === productId);
       if (cartItem && cartItem.quantity > 1) cartItem.quantity--;
     },
-    deleteItem(state: Cart, productId: string) {
-      state.items = state.items.filter((item) => item.productId !== productId);
+    deleteItem(state: Cart, productId: number) {
+      state.items = state.items.filter((item) => item.id !== productId);
     },
     clearCart(state: Cart) {
       state.items = [];
@@ -84,10 +84,7 @@ const cartModule: Module<Cart, RootState> = {
         const res = await createOrder({
           products: state.items,
           installation: state.installation,
-          user: {
-            name: "Samvel",
-            surname: "Grigoryan",
-          },
+          userId: 1,
         });
         if (res) {
           commit("clearCart");

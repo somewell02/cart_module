@@ -1,6 +1,6 @@
 import { Module } from "vuex";
 import { Product } from "@/types/product";
-import { getProducts } from "@/data/productsApi";
+import { getProducts } from "@/data/api/productsApi";
 import { RootState } from "@/store/index";
 
 interface ProductState {
@@ -16,7 +16,7 @@ const productsModule: Module<ProductState, RootState> = {
       return state.products;
     },
     getProductById(state: ProductState) {
-      return (id: string) =>
+      return (id: number) =>
         state.products.find((product) => product.id === id);
     },
   },
